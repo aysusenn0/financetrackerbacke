@@ -15,10 +15,5 @@ namespace FinanceTracker.Application.Features.Transactions
         public string CurrencyCode { get; set; } // "USD", "TRY"
         public string TypeName { get; set; }     // "Gelir", "Gider"
         public int TransactionTypeId { get; set; }
-        //public object TypeId { get; internal set; }
-
-        // Android'de Yeşil/Kırmızı ayrımı için 
-        //public int TypeId { get; set; }
-
     }
 }

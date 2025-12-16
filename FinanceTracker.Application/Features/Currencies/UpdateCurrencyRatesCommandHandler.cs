@@ -46,7 +46,10 @@ namespace FinanceTracker.Application.Features.Currencies
             var tcmbUrl = _configuration["TCMB:XmlUrl"];
             if (string.IsNullOrEmpty(tcmbUrl))
             {
-                throw new Exception("TCMB XML Url'i appsettings.json'da bulunamadı.");
+                throw new InvalidOperationException(
+     "TCMB XML URL bilgisi appsettings.json içinde tanımlı değil."
+ );
+
             }
 
             // 2. HttpClient ile TCMB'den XML'i çek

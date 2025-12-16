@@ -5,9 +5,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FinanceTracker.Infrastructure.Migrations
 {
+    
     /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
+        private const string Transactions = "Transactions";
+        private const string NVarchar = "nvarchar(max)";
+        private const string TransactionTypes = "TransactionTypes";
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,8 +21,8 @@ namespace FinanceTracker.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: NVarchar, nullable: true),
+                    Name = table.Column<string>(type: NVarchar, nullable: true),
                     RateToTRY = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -33,7 +37,7 @@ namespace FinanceTracker.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: NVarchar, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,12 +45,12 @@ namespace FinanceTracker.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transactions",
+                name: Transactions,
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: NVarchar, nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CurrencyId = table.Column<int>(type: "int", nullable: false),
                     
@@ -65,19 +69,19 @@ namespace FinanceTracker.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Transactions_TransactionTypes_TransactionTypeId",
                         column: x => x.TransactionTypeId,
-                        principalTable: "TransactionTypes",
+                        principalTable: TransactionTypes,
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_CurrencyId",
-                table: "Transactions",
+                table: Transactions,
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_TransactionTypeId",
-                table: "Transactions",
+                table: Transactions,
                 column: "TransactionTypeId");
         }
 
@@ -85,13 +89,13 @@ namespace FinanceTracker.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: Transactions);
 
             migrationBuilder.DropTable(
                 name: "Currencies");
 
             migrationBuilder.DropTable(
-                name: "TransactionTypes");
+                name: TransactionTypes);
         }
     }
 }
